@@ -5,6 +5,7 @@ import Layout from "../components/layout"
 
 const IndexPage = () => (
   <Layout>
+    <Link to="/good-form/">Good form</Link>
     <Link to="/bad-form/">Bad form</Link>
   </Layout>
 )

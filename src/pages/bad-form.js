@@ -1,6 +1,7 @@
 import React from "react"
+import classnames from "classnames"
 import Layout from "../components/layout"
-import { city } from "../validation/city"
+import validators from "../validation/validators"
 
 const BadForm = () => {
   const [state, setState] = React.useState({})
@@ -32,50 +33,53 @@ const BadForm = () => {
 
   const showResult = Object.entries(viewState).length > 0
 
-  const handleValidation = name =>
-    showErrors && !/t{2}/.test(getViewValue(name) || "")
+  const validate = name =>
+    showErrors && validators[name](getViewValue(name) || "")
 
-  const getClasses = name => (handleValidation(name) ? "_has_error" : "")
+  const getClasses = name => (validate(name) ? "_has_error" : "")
 
   return (
     <Layout>
-      <h1>😈 Bad form</h1>
-      <h3>Show errors: {showErrors.toString()}</h3>
-      <form>
-        <b>City</b>
-        <input
-          type="text"
-          value={getValue("city")}
-          onChange={e => handleChange("city", e)}
-          className={getClasses("city")}
-        />
-        {handleValidation("city") && <p className="error">Something's wrong</p>}
-        <input
-          className="no-outline"
-          type="text"
-          value={getValue("email")}
-          placeholder="Email"
-          onChange={e => handleChange("email", e)}
-          className={getClasses("email")}
-        />
-        {handleValidation("email") && (
-          <p className="error">Something's wrong</p>
-        )}
-        <b>Name</b>
+      <h1>
+        <span role="img" aria-label="devil-emoji">
+          😈{" "}
+        </span>
+        Bad form
+      </h1>
+      <div className="wrapper">
+        <b className="label--bad">Name</b>
         <input
           type="text"
           value={getValue("name")}
           onChange={e => handleChange("name", e)}
           className={getClasses("name")}
         />
-        {handleValidation("name") && <p className="error">Something's wrong</p>}
+        {validate("name") && <p className="error">Something's wrong</p>}
+        <b className="label--bad">City</b>
+        <input
+          type="text"
+          value={getValue("city")}
+          onChange={e => handleChange("city", e)}
+          className={getClasses("city")}
+        />
+        {validate("city") && <p className="error">Something's wrong</p>}
+        <b className="label--bad">Email</b>
+        <input
+          type="text"
+          value={getValue("email")}
+          placeholder="john.doe@gmail.com"
+          onChange={e => handleChange("email", e)}
+          className={classnames(getClasses("email"), "no-outline")}
+        />
+        {validate("email") && <p className="error">Something's wrong</p>}
         <button onClick={handleSubmit}>Submit</button>
         <button onClick={handleClear}>Clear</button>
-      </form>
+      </div>
       {showResult && (
         <section>
+          <h2>Form submitted!</h2>
           {Object.entries(viewState).map(([name, value]) => (
-            <p>
+            <p key={name}>
               <span>
                 <b>{name}: </b>
                 {value}

@@ -27,6 +27,23 @@ const Header = ({ siteTitle }) => (
           {siteTitle}
         </Link>
       </h1>
+      <br />
+      <p>
+        <Link style={{ color: "white" }} to="/good-form/">
+          <span role="img" aria-label="innocent-emoji">
+            😇{" "}
+          </span>
+          Good form
+        </Link>
+      </p>
+      <p>
+        <Link style={{ color: "white" }} to="/bad-form/">
+          <span role="img" aria-label="devil-emoji">
+            😈{" "}
+          </span>
+          Bad form
+        </Link>
+      </p>
     </div>
   </header>
 )
