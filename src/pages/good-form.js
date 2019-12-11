@@ -40,7 +40,8 @@ const GoodForm = () => {
 
   const showResult = Object.entries(viewState).length > 0
 
-  const validate = name => validators[name](getValue(name))
+  const validate = name =>
+    showValidation && validators[name](getValue(name) || "")
 
   const getClasses = name => {
     if (validate(name)) {
@@ -70,7 +71,6 @@ const GoodForm = () => {
             className={classnames("input--good", getClasses("name"))}
           />
         </label>
-        {showValidation && validate("name")}
 
         {/* Label wrapping input */}
         <label className="label--good">

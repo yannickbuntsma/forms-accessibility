@@ -71,10 +71,10 @@ const BadForm = () => {
           onChange={e => handleChange("email", e)}
           className={classnames(getClasses("email"), "no-outline")}
         />
-        <div className="buttons">
-          <button onClick={handleSubmit}>Submit</button>
-          <button onClick={handleClear}>Clear</button>
-        </div>
+      </div>
+      <div className="buttons">
+        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleClear}>Clear</button>
       </div>
       {showResult && (
         <section>

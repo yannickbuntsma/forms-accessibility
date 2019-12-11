@@ -44,6 +44,14 @@ const Header = ({ siteTitle }) => (
           Bad form
         </Link>
       </p>
+      <p>
+        <Link style={{ color: "white" }} to="/fix-this-form/">
+          <span role="img" aria-label="laboratory-man-emoji">
+            👨‍🔬{" "}
+          </span>
+          Fix this form
+        </Link>
+      </p>
     </div>
   </header>
 )
