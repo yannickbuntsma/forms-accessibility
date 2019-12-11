@@ -73,7 +73,7 @@ const GoodForm = () => {
         </label>
 
         {/* Label wrapping input */}
-        <label className="label--good">
+        <label htmlFor="city__id" className="label--good">
           <strong>City</strong>
           <input
             required

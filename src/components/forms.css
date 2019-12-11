@@ -54,6 +54,7 @@ input.input--good._has_error {
 }
 
 .error {
+  display: block;
   color: red;
 }
 

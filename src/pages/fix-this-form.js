@@ -68,7 +68,7 @@ const FixThisForm = () => {
       {/* 1b. Add submit handler to form */}
       {/*<form id="signup-form" onSubmit={handleSubmit}>*/}
         <div className="wrapper">
-        {/* 2. Wrap each input in a label element */}
+        {/* 2. Wrap each input in a label element (or use htmlFor) */}
         {/*<label className="label--good">*/}
         {/*  <strong>Name</strong>*/}
         <b className="label--bad">Name</b>
