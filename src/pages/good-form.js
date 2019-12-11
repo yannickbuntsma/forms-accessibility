@@ -1,4 +1,5 @@
 import React from "react"
+import classnames from "classnames"
 import Layout from "../components/layout"
 import validators from "../validation/validators"
 
@@ -39,8 +40,7 @@ const GoodForm = () => {
 
   const showResult = Object.entries(viewState).length > 0
 
-  const validate = name =>
-     validators[name](getValue(name))
+  const validate = name => validators[name](getValue(name))
 
   const getClasses = name => {
     if (validate(name)) {
@@ -62,25 +62,27 @@ const GoodForm = () => {
         {/* Label wrapping input */}
         <label className="label--good">
           <strong>Name</strong>
+          {/* No validation, no error, no aria-describedby necessary */}
           <input
             type="text"
             value={getValue("name")}
             onChange={e => handleChange("name", e)}
-            className={getClasses("name")}
+            className={classnames("input--good", getClasses("name"))}
           />
         </label>
         {showValidation && validate("name")}
-        {/* */}
 
         {/* Label wrapping input */}
         <label className="label--good">
           <strong>City</strong>
           <input
+            required
             id="city__id"
+            aria-describedby="city__error"
             type="text"
             value={getValue("city")}
             onChange={e => handleChange("city", e)}
-            className={getClasses("city")}
+            className={classnames("input--good", getClasses("city"))}
           />
         </label>
         {showValidation && validate("city")}
@@ -94,13 +96,14 @@ const GoodForm = () => {
         </label>
         {/* Using the correct type will give you free goodies! */}
         <input
+          required
           id="email__id"
           aria-describedby="email__error"
           type="email"
           value={getValue("email")}
           placeholder="john.doe@gmail.com"
           onChange={e => handleChange("email", e)}
-          className={getClasses("email")}
+          className={classnames("input--good", getClasses("email"))}
         />
         {showValidation && validate("email")}
       </form>
@@ -110,17 +113,19 @@ const GoodForm = () => {
        * a "form" attribute on the label and "id" on the form.
        * The type="submit" will trigger the form submit.
        */}
-      <button form="signup-form" type="submit">
-        Submit
-      </button>
-      <button onClick={handleClear}>Clear</button>
+      <div className="buttons">
+        <button form="signup-form" type="submit">
+          Submit
+        </button>
+        <button onClick={handleClear}>Clear</button>
+      </div>
       {showResult && (
-        <section>
+        <section role="alert" aria-live="assertive">
           <h2>Form submitted!</h2>
           {Object.entries(viewState).map(([name, value]) => (
             <p key={name}>
               <span>
-                <b>{name}: </b>
+                <strong>{name}: </strong>
                 {value}
               </span>
             </p>

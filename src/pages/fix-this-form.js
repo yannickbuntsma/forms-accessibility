@@ -3,10 +3,10 @@ import classnames from "classnames"
 import Layout from "../components/layout"
 import validators from "../validation/validators"
 
-const BadForm = () => {
+const FixThisForm = () => {
   const [state, setState] = React.useState({})
   const [viewState, setViewState] = React.useState({})
-  const [showValidation, setShowValidation] = React.useState(false)
+  const [showErrors, setShowErrors] = React.useState(false)
 
   const handleChange = (name, event) => {
     const { value } = event.currentTarget
@@ -22,19 +22,19 @@ const BadForm = () => {
   const handleSubmit = e => {
     e.preventDefault()
     setViewState(state)
-    setShowValidation(true)
+    setShowErrors(true)
   }
   const handleClear = e => {
     e.preventDefault()
     setState({})
     setViewState({})
-    setShowValidation(false)
+    setShowErrors(false)
   }
 
   const showResult = Object.entries(viewState).length > 0
 
   const validate = name =>
-    showValidation && validators[name](getViewValue(name) || "")
+    showErrors && validators[name](getViewValue(name) || "")
 
   const getClasses = name => (validate(name) ? "_has_error" : "")
 
@@ -93,4 +93,4 @@ const BadForm = () => {
   )
 }
 
-export default BadForm
+export default FixThisForm
