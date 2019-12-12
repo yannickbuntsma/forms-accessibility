@@ -129,7 +129,7 @@ const FixThisForm = () => {
       </div>
       {/* Outside the form you need type="submit" */}
       <div className="buttons">
-        <button form="signup-form">
+        <button onClick={handleSubmit}>
           Submit
         </button>
         <button onClick={handleClear}>Clear</button>

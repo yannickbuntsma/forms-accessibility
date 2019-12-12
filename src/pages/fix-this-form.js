@@ -27,12 +27,12 @@ const FixThisForm = () => {
      * TODO: Before submit, check if some of the validations have failed
      */
 
-    // const hasInvalidField = ["name", "city", "email"].some(name =>
-    //   validators[name](getValue(name))
-    // )
-    // if (hasInvalidField) {
-    //   return
-    // }
+    const hasInvalidField = ["name", "city", "email"].some(name =>
+      validators[name](getValue(name))
+    )
+    if (hasInvalidField) {
+      return
+    }
 
     setViewState(state)
   }
@@ -48,19 +48,19 @@ const FixThisForm = () => {
   const validate = name =>
     showValidation && validators[name](getValue(name) || "")
 
-  const getClasses = name => (validate(name) ? "_has_error" : "")
-
   /**
    * TODO: Add _is_valid class to show validation on fields with correct values
    */
 
-  // const getClasses = name => {
-  //   if (validate(name)) {
-  //     return showValidation && "_has_error"
-  //   } else {
-  //     return !validators[name](getValue(name)) && showValidation && "_is_valid"
-  //   }
-  // }
+  // const getClasses = name => (validate(name) ? "_has_error" : "")
+
+  const getClasses = name => {
+    if (validate(name)) {
+      return showValidation && "_has_error"
+    } else {
+      return !validators[name](getValue(name)) && showValidation && "_is_valid"
+    }
+  }
 
   /**
    * TODO:
@@ -87,43 +87,79 @@ const FixThisForm = () => {
         </span>
         Fix this form
       </h1>
-      <div className="wrapper">
-        <b className="label--bad">Name</b>
+      <form id="signup-form" onSubmit={handleSubmit}>
+        <label htmlFor="name" className="label--good">
+          <strong>Name</strong>
+        </label>
+        {/* No validation, no error, no aria-describedby necessary */}
         <input
+          id="name"
           type="text"
           value={getValue("name")}
           onChange={e => handleChange("name", e)}
-          className={classnames(getClasses("name"), "no-outline")}
+          className={classnames("input--good", getClasses("name"))}
         />
-        {validate("name") && <p className="error">Something's wrong</p>}
-        <b className="label--bad">City</b>
+
+        <label htmlFor="city__id" className="label--good">
+          <strong>City</strong>
+        </label>
         <input
+          required
+          id="city__id"
+          aria-describedby="city__error"
           type="text"
           value={getValue("city")}
           onChange={e => handleChange("city", e)}
-          className={classnames(getClasses("city"), "no-outline")}
+          className={classnames("input--good", getClasses("city"))}
         />
-        {validate("city") && <p className="error">Something's wrong</p>}
-        <b className="label--bad">Email</b>
+        {showValidation && validate("city") && (
+          <span className="error" id="city__error">
+            A city name should contain at least two A's
+          </span>
+        )}
+
+        {/*
+         * Label separately from input, but "linked" witha
+         * "for" attribute on the label and "id" on the input
+         */}
+        <label htmlFor="email__id" className="label--good">
+          <strong>Email</strong>
+        </label>
+        {/* Using the correct type will give you free goodies! */}
         <input
-          type="text"
+          required
+          id="email__id"
+          aria-describedby="email__error"
+          type="email"
           value={getValue("email")}
           placeholder="john.doe@gmail.com"
           onChange={e => handleChange("email", e)}
-          className={classnames(getClasses("email"), "no-outline")}
+          className={classnames("input--good", getClasses("email"))}
         />
-      </div>
+        {showValidation && validate("email") && (
+          <span className="error" id="email__error">
+            Email address is not valid
+          </span>
+        )}
+      </form>
+
+      {/*
+       * Button outside of the form, but "linked" with
+       * a "form" attribute on the label and "id" on the form.
+       */}
       <div className="buttons">
-        <button onClick={handleSubmit}>Submit</button>
+        <button form="signup-form">
+          Submit
+        </button>
         <button onClick={handleClear}>Clear</button>
       </div>
       {showResult && (
-        <section>
+        <section role="alert" aria-live="assertive">
           <h2>Form submitted!</h2>
           {Object.entries(viewState).map(([name, value]) => (
             <p key={name}>
               <span>
-                <b>{name}: </b>
+                <strong>{name}: </strong>
                 {value}
               </span>
             </p>
