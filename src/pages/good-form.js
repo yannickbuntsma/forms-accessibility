@@ -61,10 +61,11 @@ const GoodForm = () => {
       </h1>
       <form id="signup-form" onSubmit={handleSubmit}>
         {/* Label wrapping input */}
-        <label className="label--good">
+        <label htmlFor="name" className="label--good">
           <strong>Name</strong>
           {/* No validation, no error, no aria-describedby necessary */}
           <input
+            id="name"
             type="text"
             value={getValue("name")}
             onChange={e => handleChange("name", e)}
